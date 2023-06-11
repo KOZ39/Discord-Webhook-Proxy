@@ -8,11 +8,16 @@ Converting from Flask to FastAPI: [Another Discord Webhook Proxy](https://devfor
 $ pip install -r requirements.txt
 ```
 
-## Run it
+## Usage
+> **Warning:**  
+> In order for the application to function properly, an SSL certificate and a web server like Nginx are required. Please make sure to configure SSL properly and set up a reverse proxy with Nginx or a similar web server.
+
 ```
 $ uvicorn main:app
 ```
+or
+```
+$ uvicorn main:app --port <port>
+```
 
-## Usage
-Original: `https://discord.com/api/webhooks/<id>/<token>`  
-Proxy: `https://<your domain>/api/webhooks/<id>/<token>`
+Change `https://discord.com/api/webhooks/<id>/<token>` to `https://<your domain>/api/webhooks/<id>/<token>`
