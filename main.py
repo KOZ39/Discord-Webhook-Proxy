@@ -40,6 +40,6 @@ async def proxy(
     async with aiohttp.ClientSession() as session:
         async with session.post(f"https://discord.com/api/webhooks/{id}/{token}", json=data) as resp:
             status_code = 200 if resp.status == 204 else resp.status
-            content = await resp.json(content_type=None)
+            content = await resp.json(content_type=None) or {}
 
-    return JSONResponse(content or {}, status_code)
+    return JSONResponse(content=content, status_code=status_code)
