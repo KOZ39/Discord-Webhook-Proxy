@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 import aiohttp
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
@@ -14,6 +15,8 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 app.add_middleware(SlowAPIMiddleware)
 
+access_log = logging.getLogger('uvicorn.access')
+access_log.disabled = True
 
 internal_rate_limiter = {}
 async def remove_from_internal_rate_limiter(key: str) -> None:
@@ -40,6 +43,6 @@ async def proxy(
     async with aiohttp.ClientSession() as session:
         async with session.post(f"https://discord.com/api/webhooks/{id}/{token}", json=data) as resp:
             status_code = 200 if resp.status == 204 else resp.status
-            content = await resp.json(content_type=None) or {}
+            content = await resp.json(content_type=None)
 
-    return JSONResponse(content=content, status_code=status_code)
+    return JSONResponse(content or {}, status_code)
