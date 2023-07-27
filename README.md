@@ -4,7 +4,7 @@
 Converting from Flask to FastAPI: [Another Discord Webhook Proxy](https://devforum.roblox.com/t/another-discord-webhook-proxy/2154490)
 
 ## Requirements
-- Python 3.7+
+- Python 3.8+
 
 ## Installation
 ```
