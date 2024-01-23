@@ -19,18 +19,15 @@ access_log = logging.getLogger('uvicorn.access')
 access_log.disabled = True
 
 internal_rate_limiter = {}
+
+
 async def remove_from_internal_rate_limiter(key: str) -> None:
-  await asyncio.sleep(2)
-  internal_rate_limiter.pop(key, None)
+    await asyncio.sleep(2)
+    internal_rate_limiter.pop(key, None)
 
 
 @app.post("/api/webhooks/{id}/{token}")
-async def proxy(
-    id: int,
-    token: str,
-    request: Request,
-    background_tasks: BackgroundTasks
-):
+async def proxy(id: int, token: str, request: Request, background_tasks: BackgroundTasks):
     key = f"{id}/{token}"
 
     if key in internal_rate_limiter.keys():
